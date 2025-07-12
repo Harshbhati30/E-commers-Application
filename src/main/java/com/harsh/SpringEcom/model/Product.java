@@ -1,24 +1,24 @@
 package com.harsh.SpringEcom.model;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Entity
+@Document(collection = "products")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     private String name;
     private String description;
     private String brand;
@@ -30,6 +30,5 @@ public class Product {
 
     private String imageName;
     private String imageType;
-    @Lob
     private byte[] imageData;
 }

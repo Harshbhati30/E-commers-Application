@@ -1,6 +1,5 @@
 package com.harsh.SpringEcom.service;
 
-
 import com.harsh.SpringEcom.model.Product;
 import com.harsh.SpringEcom.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,36 +11,43 @@ import java.util.List;
 
 @Service
 public class ProductService {
+
     @Autowired
-    private ProductRepo ProductRepo;
+    private ProductRepo productRepo;
 
-    public List<Product> getAllProducts(){
-        return ProductRepo.findAll();
+    // ✅ Get all products
+    public List<Product> getAllProducts() {
+        return productRepo.findAll();
     }
 
-    public Product getProductById(int id) {
-        return ProductRepo.findById(id).orElse(null);
+    // ✅ Get product by ID (String)
+    public Product getProductById(String id) {
+        return productRepo.findById(id).orElse(null);
     }
 
+    // ✅ Add product with image
     public Product addProduct(Product product, MultipartFile imageFile) throws IOException {
         product.setImageName(imageFile.getOriginalFilename());
         product.setImageType(imageFile.getContentType());
         product.setImageData(imageFile.getBytes());
-        return ProductRepo.save(product);
+        return productRepo.save(product);
     }
 
-    public Product updateProduct(Product product, MultipartFile image) throws IOException {
-        product.setImageName(image.getOriginalFilename());
-        product.setImageType(image.getContentType());
-        product.setImageData(image.getBytes());
-        return ProductRepo.save(product);
+    // ✅ Update product with image (ensure ID is set before calling this)
+    public Product updateProduct(Product product, MultipartFile imageFile) throws IOException {
+        product.setImageName(imageFile.getOriginalFilename());
+        product.setImageType(imageFile.getContentType());
+        product.setImageData(imageFile.getBytes());
+        return productRepo.save(product); // save() updates if ID exists
     }
 
-    public void deleteProduct(int id) {
-        ProductRepo.deleteById(id);
+    // ✅ Delete product by ID (String)
+    public void deleteProduct(String id) {
+        productRepo.deleteById(id);
     }
 
+    // ✅ Search products
     public List<Product> searchProducts(String keyword) {
-        return ProductRepo.searchProducts(keyword);
+        return productRepo.searchProducts(keyword);
     }
 }
